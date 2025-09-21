@@ -42,12 +42,41 @@ class StudentHealth(models.Model):
     taille = models.FloatField(blank=True, null=True)
     imc = models.FloatField(blank=True, null=True)
 
+DEPARTEMENT_CHOICES = [
+    ("IRT", "IRT"),
+    ("SID", "SID"),
+    ("MPG", "MPG"),
+    ("GC", "GC"),
+    ("GM", "GM"),
+    ("GE", "GE"),
+]
+
+SEMESTRE_CHOICES = [
+    ("S1", "S1"),
+    ("S2", "S2"),
+    ("S3", "S3"),
+    ("S4", "S4"),
+    ("S3 DD", "S3 DD"),
+    ("S4DD", "S4DD"),
+    ("S5DD", "S5DD"),
+    ("S5", "S5"),
+    ("S5E", "S5E"),
+    ("S6DD", "S6DD"),
+    ("S6", "S6"),
+]
+
+NIVEAU_CHOICES = [
+    ("1ère année", "1ère année"),
+    ("2e année", "2e année"),
+    ("3eme année", "3eme année"),
+]
+
 
 class StudentAcademic(models.Model):
     student = models.OneToOneField(Student, on_delete=models.CASCADE, related_name="academic")
-    departement = models.CharField(max_length=100, blank=True, null=True)
-    niveau_actuel = models.CharField(max_length=50, blank=True, null=True)
-    semestre = models.CharField(max_length=20, blank=True, null=True)
+    departement = models.CharField(max_length=100, blank=True, null=True, choices=DEPARTEMENT_CHOICES)
+    niveau_actuel = models.CharField(max_length=50, blank=True, null=True, choices=NIVEAU_CHOICES)
+    semestre = models.CharField(max_length=20, choices=SEMESTRE_CHOICES, blank=True, null=True)
     annee_s1 = models.IntegerField(blank=True, null=True)
     validation_s1 = models.BooleanField(default=False)
     releve_s1 = models.FileField(upload_to="documents/academics/", blank=True, null=True)
